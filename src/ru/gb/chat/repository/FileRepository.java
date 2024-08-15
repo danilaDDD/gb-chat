@@ -25,7 +25,6 @@ public class FileRepository {
         List<String> lines = new ArrayList<>();
 
         try(Scanner scanner = new Scanner(new FileReader(this.filePath))){
-            scanner.nextLine(); // проходит первую пустую строку
             while(scanner.hasNext()){
                 lines.add(scanner.nextLine());
             }

@@ -12,7 +12,7 @@ public class AccountFileRepository implements AccountRepository{
     @Override
     public Account find(String login, String password) throws ServerException {
         return getAll().stream()
-                .filter(account -> {account.getLogin().equals(login) && account.getPassword().equals(password)})
+                .filter(account -> account.getLogin().equals(login) && account.getPassword().equals(password))
                 .findFirst().get();
     }
 
