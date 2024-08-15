@@ -1,17 +1,14 @@
 package ru.gb.chat.server;
 
-import ru.gb.chat.client.ClientData;
 import ru.gb.chat.exceptions.ServerException;
-import ru.gb.chat.response.AllClientsResponse;
-import ru.gb.chat.response.ClientResponse;
-import ru.gb.chat.response.SendClientResponse;
+import ru.gb.chat.repository.LogRepository;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ServerWindow extends JFrame implements Server{
+public class ServerWindow extends JFrame implements ServerView{
     private static final int WIDTH = 800;
     private static final int HEIGHT = 300;
     private static final int POS_X = 500;
@@ -19,35 +16,24 @@ public class ServerWindow extends JFrame implements Server{
     private static final Color NOT_ACTIVE_COLOR = Color.GRAY;
     private static final Color ACTIVE_COLOR = Color.GREEN;
 
-    private final ClientDB clientDB;
+    private final Server server;
     private final JButton startBtn = new JButton("Start");
     private final JButton stopBtn = new JButton("Stop");
-    private final JTextArea log = new JTextArea();
-    private boolean isServerWorking;
+    private final JTextArea logField = new JTextArea();
 
-    public ServerWindow(ClientDB clientDB){
-        this.clientDB = clientDB;
-        this.isServerWorking = true;
+    public ServerWindow(){
+        this.server = new Server(false, this);
         initialGui();
         setButtonsListener();
         colorizeCurrentButtons();
-        initialClientsLog();
-    }
-
-    private void initialClientsLog() {
-        AllClientsResponse response = getAllClientsResponse();
-        if(response.getStatus().equals(ServerStatus.SUCCESS)){
-            for(ClientData clientData: response.getClientDataList()){
-                this.log.append(clientData + "\n");
-            }
-        }
+        logField.setText(server.loadLog());
     }
 
     private void setButtonsListener() {
         startBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                isServerWorking = true;
+                server.setServerWorking(true);
                 colorizeCurrentButtons();
 
             }
@@ -55,7 +41,7 @@ public class ServerWindow extends JFrame implements Server{
         stopBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                isServerWorking = false;
+                server.setServerWorking(false);
                 colorizeCurrentButtons();
             }
         });
@@ -68,7 +54,7 @@ public class ServerWindow extends JFrame implements Server{
         setTitle("Chat server");
         setAlwaysOnTop(true);
 
-        add(log);
+        add(logField);
 
         JPanel panBottom = new JPanel(new GridLayout(1, 2));
         panBottom.add(startBtn);
@@ -80,7 +66,7 @@ public class ServerWindow extends JFrame implements Server{
     }
 
     private void colorizeCurrentButtons() {
-        if(isServerWorking){
+        if(server.isServerWorking()){
             startBtn.setBackground(NOT_ACTIVE_COLOR);
             stopBtn.setBackground(ACTIVE_COLOR);
         }else{
@@ -89,56 +75,22 @@ public class ServerWindow extends JFrame implements Server{
         }
     }
 
-
     @Override
-    public ClientResponse getDefaultClient(int clientId) {
-        try {
-            ServerStatus serverStatus;
-            if (!this.isServerWorking) {
-                serverStatus = ServerStatus.SERVER_NOT_FOUND;
-                this.log.append(String.format("not get default client:server status:%s", serverStatus));
-                return new ClientResponse(serverStatus, null);
-            }
-
-
-            ClientData clientData = clientDB.getDefaultClient(clientId);
-            serverStatus = ServerStatus.SUCCESS;
-            this.log.append(String.format("%s:get default client success%n", clientData.toString()));
-
-            return new ClientResponse(serverStatus, clientData);
-        }catch (ServerException e){
-            return new ClientResponse(ServerStatus.ERROR, null);
-        }
+    public void infoLog(String message) {
+        log(message);
     }
 
     @Override
-    public SendClientResponse sendClient(ClientData clientData) {
-        ServerStatus serverStatus;
-        if(!this.isServerWorking){
-            serverStatus = ServerStatus.SERVER_NOT_FOUND;
-            this.log.append(String.format("not send client server status %s%n", serverStatus));
-            return new SendClientResponse(serverStatus);
-        }
-
-        try {
-            clientDB.saveClient(clientData);
-            serverStatus = ServerStatus.SUCCESS;
-            this.log.append(String.format("send client success %s%n", clientData.toString()));
-        } catch (ServerException e) {
-            serverStatus = ServerStatus.ERROR;
-            this.log.append(String.format("not send client server status %s%n", serverStatus));
-        }
-
-        return new SendClientResponse(serverStatus);
+    public void errorLog(String message) {
+        log(message);
     }
 
-    @Override
-    public AllClientsResponse getAllClientsResponse() {
-        try {
-            java.util.List<ClientData> clientDataList = clientDB.getAllClients();
-            return new AllClientsResponse(ServerStatus.SUCCESS, clientDataList);
-        } catch (ServerException e) {
-            return new AllClientsResponse(ServerStatus.ERROR, null);
-        }
+    private void log(String message){
+        logField.setText(logField.getText() + message + "\n");
+        server.log(message);
+    }
+
+    public Server getServer(){
+        return server;
     }
 }

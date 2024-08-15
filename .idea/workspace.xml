@@ -4,28 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0aa43e19-b965-4232-aeca-207b1812a5f5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/readme" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/client/ClientData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/client/ClientGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/exceptions/ServerException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/response/AllClientsResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/response/ClientResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/response/SendClientResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/response/ServerResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/ClientDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/FileClientDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/ServerStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/ServerWindow.java" afterDir="false" />
+    <list default="true" id="0aa43e19-b965-4232-aeca-207b1812a5f5" name="Changes" comment="base realize">
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/client/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/client/ClientView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/models/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/models/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/repository/AccountFileRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/repository/AccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/repository/FileRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/repository/LogRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/repository/MessageFileRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/repository/MessageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/response/AccountResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/ServerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/gb/chat/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/client/ClientData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/client/ClientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/gb/chat/client/ClientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/response/SendClientResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/gb/chat/response/SendMessageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/server/ClientDB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/server/FileClientDB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/gb/chat/server/ServerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/gb/chat/server/ServerWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +47,29 @@
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1722443109" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1722443108" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -61,9 +85,9 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "app.teamhub.trackedBranches": "",
+    "app.teamhub.trackedBranches": "1uruu39/main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/danila/gb/jdk/game",
+    "last_opened_file_path": "/home/danila/self2/calendar-api",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -114,8 +138,20 @@
       <workItem from="1721308829844" duration="8975000" />
       <workItem from="1721401910296" duration="4035000" />
       <workItem from="1722350713478" duration="8254000" />
-      <workItem from="1722431909826" duration="10989000" />
+      <workItem from="1722431909826" duration="12847000" />
+      <workItem from="1722608650067" duration="190000" />
+      <workItem from="1723643645129" duration="4560000" />
+      <workItem from="1723728946612" duration="12141000" />
     </task>
+    <task id="LOCAL-00001" summary="base realize">
+      <option name="closed" value="true" />
+      <created>1722443012372</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1722443012373</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,6 +160,34 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="readme" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="base realize" />
+    <option name="LAST_COMMIT_MESSAGE" value="base realize" />
+  </component>
+  <component name="WfRunsListSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "branch": "main",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "main",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "main",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "main",
+      "currentBranchFilter": true
+    }
+  ],
+  "lastFilter": {
+    "branch": "main",
+    "currentBranchFilter": true
+  }
+}]]></component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -131,16 +195,6 @@
           <url>file://$PROJECT_DIR$/src/ru/gb/chat/client/ClientGUI.java</url>
           <line>69</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ru/gb/chat/client/ClientGUI.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ru/gb/chat/server/ServerWindow.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,9 +1,11 @@
 package ru.gb.chat.client;
 
-import ru.gb.chat.response.ClientResponse;
-import ru.gb.chat.response.SendClientResponse;
+import ru.gb.chat.models.Account;
+import ru.gb.chat.models.Message;
+import ru.gb.chat.response.ServerResponse;
 import ru.gb.chat.server.Server;
 import ru.gb.chat.server.ServerStatus;
+import ru.gb.chat.server.ServerView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,20 +13,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class ClientGUI extends JFrame {
+public class ClientGUI extends JFrame implements ClientView {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
     private static final int MAX_POS_X = 1400;
     private static final int MAX_POS_Y = 1400;
 
-    private final Server server;
     private final JTextField log = new JTextField();
 
     private final JPanel panelTop = new JPanel(new GridLayout(2, 3));
-    private final JTextField ipAddressField = new JTextField();
-    private final JTextField portField = new JTextField();
-    private final JTextField loginField = new JTextField();
-    private final JPasswordField passwordField = new JPasswordField();
+    private final JTextField ipAddressField = new JTextField("127.0.0.1");
+    private final JTextField portField = new JTextField("8080");
+    private final JTextField loginField = new JTextField("ivanov");
+    private final JPasswordField passwordField = new JPasswordField("float123");
     private final JButton loginBtn = new JButton("Login");
 
     private final JPanel panelBottom = new JPanel(new BorderLayout());
@@ -33,66 +34,44 @@ public class ClientGUI extends JFrame {
 
     private final Random random = new Random();
 
-    private final int clientId;
+    private final Client client;
+
+    private java.util.List<String> messages;
 
 
-    public ClientGUI(Server server, int clientId){
-        this.server = server;
-        this.clientId = clientId;
+    public ClientGUI(Server server){
+        this.client = new Client(server, this);
         initialGUI();
-        initialDefaultData();
 
         sendBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                submitClient();
+                Message message = getMessageObject();
+                client.sendMessage(message);
             }
         });
-    }
 
-    private void submitClient() {
-        ClientData clientData = getClientData();
-        SendClientResponse sendResponse = this.server.sendClient(clientData);
-        ServerStatus serverStatus = sendResponse.getStatus();
+        loginBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String login = loginField.getText();
+                String password = passwordField.getText();
 
-        if(serverStatus.equals(ServerStatus.SUCCESS)){
-            this.messageField.setText("");
-        }else{
-            onServerError(serverStatus);
-        }
+                client.connectToServer(login, password);
+            }
+        });
     }
 
     private void onServerError(ServerStatus serverStatus) {
         this.log.setText(String.valueOf(serverStatus));
     }
 
-    private ClientData getClientData() {
-        return new ClientData(
-                clientId,
+    private Message getMessageObject() {
+        return new Message(
                 this.ipAddressField.getText(),
                 this.portField.getText(),
-                this.loginField.getText(),
-                this.passwordField.getText(),
                 this.messageField.getText()
         );
-    }
-
-    private void initialDefaultData() {
-        ClientResponse clientResponse = server.getDefaultClient(this.clientId);
-        if(clientResponse.getStatus().equals(ServerStatus.SUCCESS)){
-            ClientData clientData = clientResponse.getClientData();
-            setClientData(clientData);
-        }else{
-            onServerError(clientResponse.getStatus());
-        }
-    }
-
-    private void setClientData(ClientData clientData) {
-        this.ipAddressField.setText(clientData.getIpAddress());
-        this.portField.setText(clientData.getPort());
-        this.loginField.setText(clientData.getLogin());
-        this.passwordField.setText(clientData.getPassword());
-        this.messageField.setText(clientData.getMessage());
     }
 
 
@@ -100,7 +79,7 @@ public class ClientGUI extends JFrame {
         setLocationRelativeTo(null);
         int[] position = getRandomPosition();
         setBounds(position[0], position[1], WIDTH, HEIGHT);
-        setTitle(String.format("Chat client id: %s", clientId));
+        setTitle("Chat client id");
 
         panelTop.add(ipAddressField);
         panelTop.add(portField);
@@ -125,5 +104,36 @@ public class ClientGUI extends JFrame {
                 random.nextInt(MAX_POS_X),
                 random.nextInt(MAX_POS_Y)
         };
+    }
+
+    @Override
+    public void showMessage(String text) {
+        messages.add(text);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String msg: messages)
+            stringBuilder.append(msg).append("\n");
+
+        messageField.setText(stringBuilder.toString());
+    }
+
+    @Override
+    public void onConnectToServer(Account account) {
+        panelTop.setVisible(false);
+    }
+
+    @Override
+    public void onDisconnect() {
+        log("Disconnect to server");
+    }
+
+    @Override
+    public void onServerError(ServerResponse response) {
+        log(response.getStatus().toString());
+    }
+
+    @Override
+    public void log(String msg) {
+        this.log.setText(msg);
     }
 }
